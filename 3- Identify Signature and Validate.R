@@ -1,3 +1,5 @@
+# This code is the exact reproduction of how the classifier was done. Be aware that due to the random component of random forest, your results can and WILL be entirely different. For a fully reproducible script of TNBC-ICI, use the "Validate TNBC-ICI Simplified.R" in the "Validate TNBC-ICI code" folder.
+
 library(dplyr)
 library(M3C)
 library(varSelRF)
@@ -73,8 +75,6 @@ dataVal = dataVal[colnames(dataVal) %in% rownames(filtered_Clean_t)]
 dataVal = dataVal[order(match(rownames(dataVal), rownames(metaVal))),]
 dataValt = as.data.frame(as.matrix(t(dataVal)))
 
-
-setwd("C:/Users/miki7/OneDrive/R/BRCA/SMARCA4/TONIC/ORR Signature/SPY-Pembro/Both_Cohorts")
 ER = as.data.frame(matrix(NA, ncol = 31, nrow = 1000))
 N = as.data.frame(matrix(NA, ncol = 31, nrow = 1000))
 AUC = as.data.frame(matrix(NA, ncol = 31, nrow = 1000))
@@ -349,14 +349,12 @@ dev.off()
 
 
 #### Identify DEG using all genes ####
-setwd("C:/Users/miki7/OneDrive/R/BRCA/SMARCA4/TONIC/ORR Signature/SPY-Pembro")
 data = read.table("Both SPY corrected.txt", sep = "\t", header = T)
 datat = as.data.frame(t(data))
 #spy = data.frame(apply(spy, 2, function(x) as.numeric(as.character(x))), row.names = rownames(spy))
 
 meta = read.table("Meta_both_SPY_cohorts.txt", sep = "\t", header = T)
 rownames(meta) = meta$Patient
-setwd("C:/Users/miki7/OneDrive/R/BRCA/SMARCA4/TONIC/ORR Signature/SPY-Pembro/Both_Cohorts")
 
 metaTrain = meta[part$train,]
 metaVal = meta[part$valid,]
@@ -561,12 +559,10 @@ legend('topleft', legend = unique(tumorLabels), fill = unique(filtered_metadata$
 dev.off()
 
 #### TCGA Survival ####
-setwd("D:/R/BRCA/DiNome/2- Ethnic Analysis")
 clin = read.table("1- Clinical Data BC Summary.csv", header = T, sep = ",")
 clin = clin[which(clin$Unified.Subtyping == "4-HRneg/HER2neg"),]
 clin = clin[which(clin$CPE.Purity > 0.5),]
 
-setwd("D:/R/BRCA")
 data = read.table("BRCA.rnaseqv2__illuminahiseq_rnaseqv2__unc_edu__Level_3__RSEM_genes_normalized__data.data.txt", sep = "\t", header = T)
 colnames(data) = substr(colnames(data),1,12)
 rownames(data) <- make.names(data[,1], unique = TRUE)
@@ -602,13 +598,9 @@ clinRes = merge(clin, GSEresult, by.x=1, by.y=0)
 clinRes$Disease.Free.Status[clinRes$Disease.Free.Status == "Recurred/Progressed"] = 1
 clinRes$Disease.Free.Status[clinRes$Disease.Free.Status == "DiseaseFree"] = 0
 
-setwd("C:/Users/miki7/OneDrive/R/BRCA/SMARCA4/TONIC/ORR Signature/SPY-Pembro/Both_Cohorts")
 write.table(clinRes, file = "Clinical TCGA for kmplot.txt", sep = "\t")
 
 #### ROC Curves using each gene ####
-load("C:/Users/miki7/OneDrive/R/BRCA/SMARCA4/TONIC/ORR Signature/SPY-Pembro/Both_Cohorts/Environment Both Cohorts 1000RF v2 - after both cohorts.RData")
-setwd("C:/Users/miki7/OneDrive/R/BRCA/SMARCA4/TONIC/ORR Signature/SPY-Pembro/Both_Cohorts")
-
 # Check that using all genes is working fine #
 selected_genes = Genes1$Gene[as.numeric(Genes1$Freq) >= 585]
 filt_rev = filtered_Clean_t[which(rownames(filtered_Clean_t) %in% selected_genes),]
