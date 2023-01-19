@@ -8,7 +8,7 @@ library(verification)
 
 load("~/Environment after ML.RData")
 
-pdf("Pan-cancer ROC - Ola-Pembro signature.pdf")
+pdf("Pan-cancer ROC.pdf")
 
 listName = c("GSE111636", "GSE165252", "GSE181815", "GSE183924", "GSE67501", "GSE78220", "IMvigor210", "E-MTAB-3218", "E-MTAB-4030")
 
