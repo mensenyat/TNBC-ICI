@@ -1,12 +1,14 @@
 # Installation steps #
-if (!require("BiocManager", quietly = TRUE))
-  install.packages("BiocManager")
-BiocManager::install("M3C")
-
 install.packages("pROC")
 install.packages("splitTools")
 install.packages("tidyverse")
 install.packages("varSelRF")
+install.packages("verification")
+
+if (!require("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+BiocManager::install("M3C")
+BiocManager::install("sva")
 
 if (!require("remotes", quietly = TRUE))
   install.packages("remotes")
