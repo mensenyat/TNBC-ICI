@@ -1,4 +1,3 @@
-load("C:/Users/miki7/OneDrive/R/BRCA/SMARCA4/TONIC/ORR Signature/SPY-Pembro/Both_Cohorts/Environment Both Cohorts 1000RF v2 - after both cohorts.RData")
 library(randomForest)
 library(pROC)
 library(verification)
@@ -63,8 +62,6 @@ obs[obs == "ORR"] = 0
 roc.area(obs = as.numeric(obs), pred = c(fit.def$votes[,2], Valresult[,2])) 
 
 # With one clinical feature #
-setwd("C:/Users/miki7/OneDrive/R/BRCA/SMARCA4/TONIC/ORR Signature/SPY-Pembro/Both_Cohorts")
-
 for(i in 1:(ncol(molAll)-1)){
   pdf(paste("Clinical ROCs/", colnames(molAll)[i], " ROC.pdf", sep = ""))
   plot(ROCwhole, col = "blue", lwd = 2)
