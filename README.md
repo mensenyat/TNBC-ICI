@@ -25,5 +25,7 @@ All analysis have been performed in Windows 11 using R v.4.0.2 in RStudio. The f
 - splitTools_0.3.2
 - ggplot2_3.3.6
 - M3C_1.10.0
+- sva_3.38.0
+- verification_1.42
 
-Instructions for the installation of all packages are included in the ______ script.
+Instructions for the installation of all packages are included in the "Validate TNBC-ICI code/Validate TNBC-ICI Simplified.R" script.
