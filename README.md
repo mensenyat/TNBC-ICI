@@ -1,6 +1,6 @@
 # TNBC-ICI
 
-TNBC-ICI is a novel, random forest based classifier than can efficiently predict response to immunotherapy in early triple-negative breast cancer patients. Here you can find all the employed code to generate this classifier. You can also test your own data to check the efficiency of TNBC-ICI in new cohorts. **Do not use this classifier for medical reasons and to change the current treatment of any patient.**
+TNBC-ICI is a novel, random forest-based classifier than can efficiently predict response to immunotherapy in early triple-negative breast cancer patients. Here you can find all the employed code to generate this classifier. You can also test your own data to check the efficiency of TNBC-ICI in new cohorts. **Do not use this classifier for medical reasons and to change the current treatment of any patient.**
 
 > Triple-Negative Breast Cancer (TNBC) is the breast cancer subtype with the highest mortality. In the last years, immunotherapy has arisen as a promising treatment in various cancers, including TNBC, but a subset of TNBC patients still does not respond to this treatment. Here, we employed machine learning algorithms to create a classifier that predicts response to immunotherapy plus chemotherapy in primary TNBC patients. This classifier has higher accuracy than other tested informative biomarkers, displaying a lower efficacy in non-TNBC breast cancer patients and other non-breast cancers. This classifier may be used to better select patients for immunotherapy, upfront, decreasing the side effects and the costs of the treatment.
 
