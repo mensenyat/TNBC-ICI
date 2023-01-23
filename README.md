@@ -14,7 +14,7 @@ NOTE: The replication of the entire analysis can be extremely long due to the nu
 
 ## Test your samples
 
-If you want to test the efficiency of TNBC-ICI in your immunotherapy-treated cohort, enter the folder "Test new samples". In this folder you can find the necessary script and environment to train the classifier employing the available genes in your cohort. In case that your cohort has missing data or does not have some of the genes in the 37-gene signature, the script is prepared to train the algorithm using the available genes. ** However, we do not guarantee that the efficiency of the classifier will be maintained using other combinations of genes. **
+If you want to test the efficiency of TNBC-ICI in your immunotherapy-treated cohort, enter the folder "Test new samples". In this folder you can find the necessary script and environment to train the classifier employing the available genes in your cohort. In case that your cohort has missing data or does not have some of the genes in the 37-gene signature, the script is prepared to train the algorithm using the available genes. **However, we do not guarantee that the efficiency of the classifier will be maintained using other combinations of genes.**
 
 ## Software repository
 
