@@ -3,7 +3,7 @@ library(pROC)
 library(verification)
 
 # Compare Training vs Validation in ORR and PD #
-molOla = read.table("Clinical_Data.txt", sep = "\t", header = T, row.names = 1)
+molNivo = read.table("Clinical_Data.txt", sep = "\t", header = T, row.names = 1)
 
 data = read.table("Both SPY corrected.txt", sep = "\t", header = T)
 datat = as.data.frame(t(data))
@@ -15,7 +15,7 @@ molPem$Patient = paste("X", molPem$Patient, sep = "")
 Pat = read.table("Meta_both_SPY_cohorts.txt", sep = "\t", header = T)
 molPem = molPem[molPem$Patient %in% Pat$Patient,]
 
-molAll = merge(t(molPem), t(molOla), by = 0)
+molAll = merge(t(molPem), t(molNivo), by = 0)
 rownames(molAll) = molAll$Row.names
 molAll = molAll[,-1]
 molAll = as.data.frame(t(molAll))
@@ -66,14 +66,14 @@ for(i in 1:(ncol(molAll)-1)){
   pdf(paste("Clinical ROCs/", colnames(molAll)[i], " ROC.pdf", sep = ""))
   plot(ROCwhole, col = "blue", lwd = 2)
   par(new=T)
-
+  
   ROCFeat = roc(molAll$Response, as.numeric(molAll[,i]), plot = T, direction = "<")
-
+  
   if(auc(ROCFeat) > 0.5){
     plot(ROCFeat, col = "red", lwd = 2, main = paste(colnames(molAll)[i], " AUC=", auc(ROCFeat)))
   } else {
     ROCFeat = roc(molAll$Response, as.numeric(molAll[,i]), plot = T, direction = ">")
-    plot(ROCFeat, col = "red", lwd = 2, main = paste(colnames(molAll)[i], " AUC=",   perfAUC_BestClin@y.values))
+    plot(ROCFeat, col = "red", lwd = 2, main = paste(colnames(molAll)[i], " AUC=",   auc(ROCFeat)))
   }
   dev.off()
 }
