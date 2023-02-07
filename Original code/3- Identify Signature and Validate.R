@@ -235,24 +235,24 @@ p
 
 
 #### Analyze in SPY non-TNBC and plot ROC curves ####
-OlaHR = read.table("GSE173839_data.txt", sep = "\t", header = T, row.names = 1)
+DurvaHR = read.table("GSE173839_data.txt", sep = "\t", header = T, row.names = 1)
 genes = read.table("Probes_to_genes_Updated.txt", sep = "\t", header = T)
-OlaHR = merge(genes, OlaHR, by.x = 1, by.y = 0)
-rownames(OlaHR) <- make.names(OlaHR$GeneName, unique = TRUE)
-OlaHR = OlaHR[,-c(1:7)]
+DurvaHR = merge(genes, DurvaHR, by.x = 1, by.y = 0)
+rownames(DurvaHR) <- make.names(DurvaHR$GeneName, unique = TRUE)
+DurvaHR = DurvaHR[,-c(1:7)]
 
-metaOlaHR = read.table("SPY/Metadata.txt", sep = "\t", header = T)
-metaOlaHR = metaOlaHR[which(metaOlaHR$Hormone == "HR"),]
-metaOlaHR = metaOlaHR[which(metaOlaHR$X.Sample_characteristics_ch1.4 == "arm: durvalumab/olaparib"),]
+metaDurvaHR = read.table("Metadata.txt", sep = "\t", header = T)
+metaDurvaHR = metaDurvaHR[which(metaDurvaHR$Hormone == "HR"),]
+metaDurvaHR = metaDurvaHR[which(metaDurvaHR$X.Sample_characteristics_ch1.4 == "arm: durvalumab/olaparib"),]
 
-OlaHR = OlaHR[,which(colnames(OlaHR) %in% metaOlaHR$Patient)]
-OlaHRt = as.data.frame(as.matrix(t(OlaHR)))
-OlaHRt = data.frame(apply(OlaHRt, 2, function(x) as.numeric(as.character(x))), row.names = rownames(OlaHRt))
-OlaHRt = as.data.frame(scale(OlaHRt))
+DurvaHR = DurvaHR[,which(colnames(DurvaHR) %in% metaDurvaHR$Patient)]
+DurvaHRt = as.data.frame(as.matrix(t(DurvaHR)))
+DurvaHRt = data.frame(apply(DurvaHRt, 2, function(x) as.numeric(as.character(x))), row.names = rownames(DurvaHRt))
+DurvaHRt = as.data.frame(scale(DurvaHRt))
 
-metaOlaHR = metaOlaHR[metaOlaHR$Patient %in% colnames(OlaHR),]
-metaOlaHR = metaOlaHR[order(match(metaOlaHR$Patient, rownames(OlaHRt))),]
-rownames(metaOlaHR) = metaOlaHR$Patient
+metaDurvaHR = metaDurvaHR[metaDurvaHR$Patient %in% colnames(DurvaHR),]
+metaDurvaHR = metaDurvaHR[order(match(metaDurvaHR$Patient, rownames(DurvaHRt))),]
+rownames(metaDurvaHR) = metaDurvaHR$Patient
 
 # Pembro cohort #
 dataPemHR = read.table("GeneExp_SPY2_Neoadjuvant_GPL20078_Corrected.txt", sep = "\t", header = T, row.names = 1)
@@ -293,18 +293,23 @@ plot(ROCWhole) # restart a new plot
 plot(ci.sp.obj, type="shape", col=alpha("grey", 0.1))
 dev.off()
 
-# Ola #
-filtered_val = OlaHRt[,which(colnames(OlaHRt) %in% selected_genes)]
-Olaresult = predict(fit.def, filtered_val, type = "prob")
-ROCOla = roc(metaOlaHR$Response, Olaresult[,2], plot = T, direction = "<")
-auc(ROCOla)
-ci.auc(ROCOla)
+# Durva #
+filtered_val = DurvaHRt[,which(colnames(DurvaHRt) %in% selected_genes)]
+Durvaresult = predict(fit.def, filtered_val, type = "prob")
+ROCDurva = roc(metaDurvaHR$Response, Durvaresult[,2], plot = T, direction = "<")
+auc(ROCDurva)
+ci.auc(ROCDurva)
 
-pdf("ROC Curve Olaparib HR.pdf")
-ci.sp.obj <- ci.sp(ROCOla, sensitivities=seq(0, 1, .01), boot.n=500, conf.level = 0.95)
-plot(ROCOla) # restart a new plot
+pdf("ROC Curve Durvaparib HR.pdf")
+ci.sp.obj <- ci.sp(ROCDurva, sensitivities=seq(0, 1, .01), boot.n=500, conf.level = 0.95)
+plot(ROCDurva) # restart a new plot
 plot(ci.sp.obj, type="shape", col=alpha("grey", 0.1))
 dev.off()
+
+obs = metaDurvaHR$Response
+obs[obs == "PD"] = 1
+obs[obs == "ORR"] = 0
+roc.area(obs = as.numeric(obs), pred = Durvaresult[,2])
 
 # Pembro #
 filtered_val = dataPemHRt[,which(colnames(dataPemHRt) %in% selected_genes)]
@@ -318,6 +323,11 @@ ci.sp.obj <- ci.sp(ROCGSE, sensitivities=seq(0, 1, .01), boot.n=500, conf.level 
 plot(ROCGSE) # restart a new plot
 plot(ci.sp.obj, type="shape", col=alpha("grey", 0.1))
 dev.off()
+
+obs = metaPemHR$Response
+obs[obs == "PD"] = 1
+obs[obs == "ORR"] = 0
+roc.area(obs = as.numeric(obs), pred = GSEresult[,2])
 
 
 #### UMAP - Volcano - Heatmap ####
