@@ -33,7 +33,7 @@ All analysis have been performed in Windows 11 using R v.4.0.2 in RStudio. The f
 Instructions for the installation of all packages are included in the "Validate TNBC-ICI code/Validate TNBC-ICI Simplified.R" script.
 
 ## Contact
-If there is any issue with the code, contact Miquel Ensenyat: m.ensenyat.mendez@gmail.com
+If there is any issue with the code, contact Miquel Ensenyat: m.ensenyat.mendez@gmail.com or [@EnsenyatMiquel](https://twitter.com/EnsenyatMiquel) in Twitter
 
 Furthermore, if you use this classifier, please contact us so we can improve the accuracy of the classifier with new data. Be a part of it!
 
